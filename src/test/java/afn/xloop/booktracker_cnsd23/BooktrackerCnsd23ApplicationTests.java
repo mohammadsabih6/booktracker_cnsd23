@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -71,5 +72,28 @@ class BooktrackerCnsd23ApplicationTests {
 				.andExpect(content().json(jsonBooks.write(books).getJson()));
 
 	}
-
+	@Test
+	public void canDeleteBook() throws Exception {
+		Book book1 = new Book(1, "HTML for Babies", "Some Kid", 1999, 26);
+		Book book2 = new Book(2, "C# Expert", "Rox", 2006, 260);
+		Collection<Book> books = new ArrayList<Book>();
+		books.add(book1);
+		books.add(book2);
+		mvc.perform(delete("/books/2")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+	}
+	@Test
+	public void canUpdateBook() throws Exception {
+		Book book1 = new Book(1, "HTML for Babies", "Some Kid", 1999, 26);
+		Book book2 = new Book(2, "C# Expert", "Rox", 2006, 260);
+		Collection<Book> books = new ArrayList<Book>();
+		books.add(book1);
+		books.add(book2);
+		Book updatedBook = new Book(1, "Java for Professionals", "Tahreem", 2021, 50);
+		mvc.perform(put("/books/update")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(new ObjectMapper().writeValueAsString(updatedBook)))
+				.andExpect(status().isOk());
+	}
 }

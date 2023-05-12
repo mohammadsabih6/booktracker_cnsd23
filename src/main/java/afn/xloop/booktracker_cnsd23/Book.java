@@ -1,12 +1,14 @@
 package afn.xloop.booktracker_cnsd23;
 
+import java.util.Collection;
+
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Getter
 @Setter
-public class Book {
+public class Book  {
     private Integer id;
     private String title;
     private String author;
@@ -21,5 +23,8 @@ public class Book {
         this.author = author;
         this.year = year;
         this.pages = pages;
+    }
+
+    public Book(int id2) {
     }
 }
